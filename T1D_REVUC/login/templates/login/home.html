@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T1D_REVUC - Login</title>
+    <link href="{% static 'login/style.css' %}" rel="stylesheet">
+</head>
+<body style="background: url('{% static 'login/DoseWiseBackground.jpg' %}') no-repeat center center fixed; background-size: cover;">
+
+    <div class="overlay"></div>
+
+    <div class="login-container">
+        
+        <div class="logo-container">
+            <img src="{% static 'login/DoseWiseLogo.png' %}" alt="Company Logo">
+            <h1>DoseWise</h1>
+        </div>
+
+        <h2>Login to Your Account</h2>
+        <p>Enter your credentials to access your account.</p>
+
+        <form action="/login" method="POST">
+            
+            <div class="input-container">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter your username" required>
+            </div>
+            
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </div>
+            
+            <div class="input-container">
+                <label for="remember">
+                    <input type="checkbox" id="remember" name="remember"> Remember me
+                </label>
+            </div>
+
+            <div class="input-container">
+                <button type="submit">Login</button>
+            </div>
+
+        </form>
+
+
+        <div class="forgot-password-container">
+            <a href="/forgot-password" class="forgot-password">Forgot Password?</a>
+        </div>
+
+        <div class="signup-link-container">
+            <p>Don't have an account? <a href="/signup" class="signup-link">Sign up here</a></p>
+        </div>
+
+    </div>
+    
+    
+    <script>
+        const loginForm = document.querySelector('form');
+        loginForm.addEventListener('submit', (e) => {
+            const username = loginForm.username.value;
+            const password = loginForm.password.value;
+    
+            if (username === '' || password === '') {
+                alert('Please fill in all fields');
+                e.preventDefault(); 
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T1D_REVUC - Sign Up</title>
+    <link href="{% static 'login/style.css' %}" rel="stylesheet">
+</head>
+<body style="background: url('{% static 'login/DoseWiseBackground.jpg' %}') no-repeat center center fixed; background-size: cover;">
+
+    <div class="overlay"></div>
+    
+    <div class="signup-container">
+        
+        <div class="logo-container">
+            <img src="{% static 'login/DoseWiseLogo.png' %}" alt="Company Logo">
+            <h1>DoseWise</h1>
+        </div>
+
+        <h2>Create Your Account</h2>
+        <p>Fill out the form to create your new account.</p>
+
+        <form action="/signup" method="POST">
+            {% csrf_token %}
+
+            <div class="input-container">
+                <label for="first_name">First Name</label>
+                <input type="text" name="first_name" id="first_name" placeholder="Enter your first name" required>
+            </div>
+
+            <div class="input-container">
+                <label for="last_name">Last Name</label>
+                <input type="text" name="last_name" id="last_name" placeholder="Enter your last name" required>
+            </div>
+
+            <div class="input-container">
+                <label for="dob">Date of Birth</label>
+                <input type="date" name="dob" id="dob" required>
+            </div>
+
+            <div class="input-container">
+                <label for="gender">Gender</label>
+                <select name="gender" id="gender" required>
+                    <option value="" disabled selected>Select your gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Non-binary">Non-binary</option>
+                    <option value="Prefer not to say">Prefer not to say</option>
+                </select>
+            </div>
+
+            <div class="input-container">
+                <label for="phone">Phone Number</label>
+                <input type="tel" name="phone" id="phone" placeholder="Enter your phone number" required>
+            </div>
+
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="input-container">
+                <label for="disease">Select Your Diagnosed Disease</label>
+                <select name="disease" id="disease" required onchange="toggleCustomDiseaseInput()">
+                    <option value="" disabled selected>Select a disease</option>
+                    <option value="Type 1 Diabetes">Type 1 Diabetes</option>
+                    <option value="Type 2 Diabetes">Type 2 Diabetes</option>
+                    <option value="Hypertension">Hypertension</option>
+                    <option value="Cardiovascular Disease">Cardiovascular Disease</option>
+                    <option value="Asthma">Asthma</option>
+                    <option value="None of the above">None of the above</option>
+                </select>
+            </div>
+
+            <div class="input-container" id="custom-disease-container" style="display: none;">
+                <label for="custom_disease">Please specify your disease</label>
+                <input type="text" name="custom_disease" id="custom_disease" placeholder="Enter your disease">
+            </div>
+
+            <div class="input-container">
+                <label for="weight">Weight (kg)</label>
+                <input type="number" name="weight" id="weight" placeholder="Enter your weight" required>
+            </div>
+
+            <div class="input-container">
+                <label for="height">Height (cm)</label>
+                <input type="number" name="height" id="height" placeholder="Enter your height" required>
+            </div>
+
+            <div class="input-container">
+                <label for="age">Age</label>
+                <input type="number" name="age" id="age" placeholder="Enter your age" required>
+            </div>
+
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="Enter your password" required>
+            </div>
+
+            <div class="input-container">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm your password" required>
+            </div>
+
+            <div class="input-container">
+                <button type="submit">Sign Up</button>
+            </div>
+        </form>
+
+        <div class="login-link-container">
+            <p>Already have an account? <a href="/login" class="login-link">Login here</a></p>
+        </div>
+
+    </div>
+    
+    
+    <script>
+        function toggleCustomDiseaseInput() {
+            const diseaseSelect = document.getElementById("disease");
+            const customDiseaseContainer = document.getElementById("custom-disease-container");
+
+            if (diseaseSelect.value === "None of the above") {
+                customDiseaseContainer.style.display = "block";
+                document.getElementById("custom_disease").required = true;
+            } else {
+                customDiseaseContainer.style.display = "none";
+                document.getElementById("custom_disease").required = false;
+            }
+        }
+
+        const signupForm = document.querySelector('form');
+        signupForm.addEventListener('submit', (e) => {
+            const password = signupForm.password.value;
+            const confirmPassword = signupForm.confirm_password.value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                e.preventDefault(); 
+            }
+        });
+    </script>
+
+
+</body>
+</html>
