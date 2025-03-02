@@ -8,7 +8,6 @@
     <link href="{% static 'login/style.css' %}" rel="stylesheet">
 </head>
 <body style="background: url('{% static 'login/DoseWiseBackground.jpg' %}') no-repeat center center fixed; background-size: cover;">
-
     <div class="overlay"></div>
 
     <div class="login-container">
@@ -21,8 +20,8 @@
         <h2>Login to Your Account</h2>
         <p>Enter your credentials to access your account.</p>
 
-        <form action="/login" method="POST">
-            
+        <form action="{% url 'login' %}" method="POST">
+            {% csrf_token %}
             <div class="input-container">
                 <label for="username">Username</label>
                 <input type="text" name="username" id="username" placeholder="Enter your username" required>
@@ -45,17 +44,15 @@
 
         </form>
 
-
         <div class="forgot-password-container">
             <a href="/forgot-password" class="forgot-password">Forgot Password?</a>
         </div>
 
         <div class="signup-link-container">
-            <p>Don't have an account? <a href="/signup" class="signup-link">Sign up here</a></p>
+            <p>Don't have an account? <a href="{% url 'signup' %}" class="signup-link">Sign up here</a></p>
         </div>
 
     </div>
-    
     
     <script>
         const loginForm = document.querySelector('form');
@@ -69,6 +66,5 @@
             }
         });
     </script>
-
 </body>
 </html>
