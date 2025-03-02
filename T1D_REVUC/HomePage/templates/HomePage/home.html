@@ -3,200 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Insulin Tracking</title>
+    <title>Insulin Website</title>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
             margin: 0;
             padding: 0;
-            background: #f0f8ff;
         }
-
         header {
             background-color: #4CAF50;
             color: white;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         .container {
             display: flex;
             justify-content: space-between;
             padding: 20px;
-            margin-top: 30px;
-            margin-bottom: 30px;
         }
-
-        .calorie-counter, .food-input {
-            width: 48%;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 15px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        .calorie-counter h3, .food-input h3 {
-            margin-top: 0;
-            color: #4CAF50;
-        }
-
-        .calorie-counter p, .food-input p {
-            color: #666;
-        }
-
-        .calorie-counter button, .food-input button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
+        .calorie-counter {
+            background-color: #ffffff;
             padding: 10px;
-            margin-top: 10px;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 20%;
+            text-align: center;
         }
-
-        .calorie-counter button:hover, .food-input button:hover {
-            background-color: #45a049;
-        }
-
-        .food-input input[type="text"] {
-            width: 80%;
+        .food-input {
+            background-color: #ffffff;
             padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            text-align: center;
+        }
+        .food-input select {
+            width: 80%;
+            padding: 8px;
             margin-top: 10px;
             border-radius: 5px;
             border: 1px solid #ddd;
-            font-size: 16px;
         }
-
         .content-section {
-            background-color: #fff;
-            padding: 30px;
+            background-color: #ffffff;
+            padding: 20px;
             margin: 20px;
-            border-radius: 15px;
+            border-radius: 5px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-
         .content-section h2 {
-            color: #4CAF50;
-            margin-bottom: 20px;
+            color: #333;
         }
-
-        .content-section ul {
-            list-style-type: none;
-            padding-left: 0;
-            font-size: 18px;
+        .content-section p {
+            color: #666;
         }
-
-        .content-section li {
-            margin-bottom: 15px;
-        }
-
         footer {
             background-color: #4CAF50;
             color: white;
+            padding: 10px;
             text-align: center;
-            padding: 20px;
-            border-top-left-radius: 20px;
-            border-top-right-radius: 20px;
-            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
-
-        .footer-links {
-            margin-top: 10px;
-            color: white;
-        }
-
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            transition: color 0.3s;
-        }
-
-        .footer-links a:hover {
-            color: #45a049;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .calorie-counter, .food-input {
-                width: 80%;
-                margin-bottom: 20px;
-            }
-
-            .content-section {
-                margin: 20px 10%;
-            }
+        .nutrition-info {
+            margin-top: 20px;
+            text-align: left;
         }
     </style>
 </head>
 <body>
+    <header>
+        <h1>Welcome to the Insulin Tracking Website</h1>
+    </header>
 
-<header>
-    <h1>Welcome to Insulin Tracking</h1>
-    <p>Your go-to platform for managing food intake and insulin dosage</p>
-</header>
+    <div class="container">
+        <!-- Calorie Counter Section -->
+        <div class="calorie-counter">
+            <h3>Calorie Counter</h3>
+            <p>Calories Today: <span id="calorie-count">0</span> kcal</p>
+            <button onclick="increaseCalories()">Add 100 kcal</button>
+        </div>
 
-<div class="container">
-    <div class="calorie-counter">
-        <h3>Calorie Counter</h3>
-        <p>Calories Today: <span id="calorie-count">0</span> kcal</p>
-        <button onclick="increaseCalories()">Add 100 kcal</button>
+        <!-- Food Input Section with Dropdown -->
+        <div class="food-input">
+            <h3>Food Intake</h3>
+            <p>Select the food you consumed:</p>
+            <select id="food-dropdown" onchange="fetchFoodData()">
+                <option value="">Select Food</option>
+                <!-- Options will be populated dynamically -->
+            </select>
+            <div class="nutrition-info" id="nutrition-info"></div>
+            <div class="insulin-calculation" id="insulin-calculation"></div>
+        </div>
     </div>
 
-    <div class="food-input">
-        <h3>Food Intake</h3>
-        <p>Enter food consumed:</p>
-        <input type="text" id="food-input" placeholder="Enter food name">
-        <button onclick="addFood()">Add Food</button>
+    <!-- Useful Information Section -->
+    <div class="content-section">
+        <h2>Useful Resources</h2>
+        <p>As a diabetic, tracking your food intake, physical activity, and insulin usage is crucial for managing blood sugar levels.</p>
+        <ul>
+            <li><strong>Insulin Calculator:</strong> Helps you calculate the amount of insulin needed for the carbs you eat.</li>
+            <li><strong>Food Database:</strong> Search for food items and their nutritional value to help you make better food choices.</li>
+            <li><strong>Exercise Tips:</strong> Find useful exercise routines that can help you manage blood glucose levels.</li>
+            <li><strong>Support Community:</strong> Join our community to get support from others managing diabetes.</li>
+        </ul>
     </div>
-</div>
 
-<div class="content-section">
-    <h2>Useful Resources</h2>
-    <p>Track your food, insulin usage, and exercise to better manage your health.</p>
-    <ul>
-        <li><strong>Insulin Calculator:</strong> Helps you calculate insulin doses based on carb intake.</li>
-        <li><strong>Food Database:</strong> Nutritional information for various foods to help track your calories.</li>
-        <li><strong>Exercise Tips:</strong> Daily exercise tips for managing blood sugar levels.</li>
-        <li><strong>Support Community:</strong> Join our community for tips, advice, and support.</li>
-    </ul>
-</div>
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Insulin Tracking Website | All Rights Reserved</p>
+    </footer>
 
-<footer>
-    <p>&copy; 2025 Insulin Tracking Website | All Rights Reserved</p>
-    <div class="footer-links">
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-        <a href="#">Contact Us</a>
-    </div>
-</footer>
+    <script>
+        let calorieCount = 0;
+        const restaurants = JSON.parse('{{ restaurants|escapejs }}');
+        const foodTypes = JSON.parse('{{ food_types|escapejs }}');
+        const nutritionalFacts = JSON.parse('{{ nutritional_facts|escapejs }}');
 
-<script>
-    let calorieCount = 0;
-    function increaseCalories() {
-        calorieCount += 100;
-        document.getElementById("calorie-count").innerText = calorieCount;
-    }
-
-    function addFood() {
-        const foodItem = document.getElementById("food-input").value;
-        if (foodItem.trim() !== "") {
-            alert(`Food added: ${foodItem}`);
-            document.getElementById("food-input").value = "";
-        } else {
-            alert("Please enter a valid food item.");
+        // Function to increase calorie count
+        function increaseCalories() {
+            calorieCount += 100;
+            document.getElementById("calorie-count").innerText = calorieCount;
         }
-    }
-</script>
 
+        // Populate dropdown with food options
+        window.onload = function() {
+            const dropdown = document.getElementById("food-dropdown");
+            foodTypes.forEach(food => {
+                const option = document.createElement("option");
+                option.value = food;
+                option.textContent = food;
+                dropdown.appendChild(option);
+            });
+        };
+
+        // Fetch nutritional data for selected food item
+        function fetchFoodData() {
+            const selectedFood = document.getElementById("food-dropdown").value;
+            if (selectedFood) {
+                const index = foodTypes.indexOf(selectedFood);
+                const foodData = nutritionalFacts[index];
+
+                // Display nutritional information
+                document.getElementById("nutrition-info").innerHTML = ` 
+                    <h4>Nutritional Information:</h4>
+                    <p><strong>Calories:</strong> ${foodData.calories} kcal</p>
+                    <p><strong>Carbs:</strong> ${foodData.carbs} g</p>
+                    <p><strong>Protein:</strong> ${foodData.protein} g</p>
+                    <p><strong>Fat:</strong> ${foodData.fat} g</p>
+                    <p><strong>Sodium:</strong> ${foodData.sodium} mg</p>
+                    <p><strong>Fiber:</strong> ${foodData.fiber} g</p>
+                `;
+
+                // Calculate insulin dosage (example: 1 unit of insulin per 10g of carbs)
+                const insulinRequired = (foodData.carbs / 10).toFixed(1);
+                document.getElementById("insulin-calculation").innerHTML = `
+                    <h4>Insulin Calculation:</h4>
+                    <p>You will need <strong>${insulinRequired}</strong> units of insulin for this food item.</p>
+                `;
+            } else {
+                document.getElementById("nutrition-info").innerHTML = '';
+                document.getElementById("insulin-calculation").innerHTML = '';
+            }
+        }
+    </script>
 </body>
 </html>

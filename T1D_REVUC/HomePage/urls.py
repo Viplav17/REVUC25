@@ -1,7 +1,7 @@
-# homepage/urls.py
 from django.urls import path
-from . import views
+from .views import home, get_food_data
 
 urlpatterns = [
-    path('', views.home, name='home'),  # HomePage URL
+    path('', home, name='home'),
+    path('get_food_data/', get_food_data, name='get_food_data'),
 ]
